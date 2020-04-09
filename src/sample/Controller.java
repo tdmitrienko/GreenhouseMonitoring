@@ -70,16 +70,19 @@ public class Controller implements Initializable {
 
 
         termomrter=new Thermometer(tt,kt,temp);
-        event=new Event(termomrter);
+        event=new Event();
         battery=new Battery(canvas.getGraphicsContext2D());
         light=new Light(canvas.getGraphicsContext2D());
         airCond=new AirConditioning(canvas.getGraphicsContext2D());
         event.attach(termomrter);
-        event.attach(battery);
-        event.attach(airCond);
         event.attach(light);
+        termomrter.attach(battery);
+        termomrter.attach(airCond);
+
 
         event.start();
+
+        temp.setText(termomrter.getTt() + "C");
     }
 
 

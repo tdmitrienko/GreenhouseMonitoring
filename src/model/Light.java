@@ -3,6 +3,9 @@ package model;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.Observable;
+import java.util.Observer;
+
 public class Light implements Observer {
     private GraphicsContext gr;
 
@@ -35,16 +38,15 @@ public class Light implements Observer {
         gr.fillOval(360-15,130,30,30);
     }
 
-
     @Override
-    public void update(Event ev, Thermometer t) {
-            if(ev.getState() % 18==0){
-                deleteL();
-            }
-            else if(ev.getState() % 24==0){
-                createLight();
-            }
+    public void update(Observable o, Object arg) {
+        int timeState = (int)arg;
+        if(timeState % 18==0){
+            deleteL();
         }
-
+        else if(timeState % 24==0){
+            createLight();
+        }
     }
+}
 

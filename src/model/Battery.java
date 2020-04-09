@@ -3,6 +3,9 @@ package model;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.Observable;
+import java.util.Observer;
+
 public class Battery implements Observer {
     private GraphicsContext gr;
 
@@ -25,15 +28,19 @@ public class Battery implements Observer {
         gr.clearRect(415,240,60,85);
     }
 
-
-    public void update(Event st,Thermometer t) {
-        if (t.getTt()<=t.getKt()) {
-            createBattery() ;
-            if(st.getState() % 10==0){
-                t.setTt(t.getTt()+1);
-                System.out.println("Прибавили");
-                deleteB();
+    @Override
+    public void update(Observable o, Object arg) {
+        Thermometer t = (Thermometer) arg;
+        if (t.getTt() < t.getKt()) {
+            createBattery();
+            try {
+                Thread.currentThread().sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            t.setTt(t.getTt() + 1);
+            System.out.println("Прибавили");
+            deleteB();
         }
     }
 }

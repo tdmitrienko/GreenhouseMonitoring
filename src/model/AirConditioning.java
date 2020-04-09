@@ -3,7 +3,10 @@ package model;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class AirConditioning implements Observer{
+import java.util.Observable;
+import java.util.Observer;
+
+public class AirConditioning implements Observer {
     private GraphicsContext gr;
 
     public AirConditioning(GraphicsContext g){
@@ -22,17 +25,19 @@ public class AirConditioning implements Observer{
         gr.clearRect(245,95,110,30);
     }
 
-
-    public void update(Event st,Thermometer t) {
-        if (t.getTt()>=t.getKt())
-           createAirConditioning();
-        if (t.getTt()>t.getKt()) {
-            if(st.getState()%10==0){
-                t.setTt(t.getTt()-1);
-                System.out.println("Отняли");
-                deleteB();
+    @Override
+    public void update(Observable o, Object arg) {
+        Thermometer t = (Thermometer) arg;
+        if (t.getTt() >= t.getKt()) {
+            createAirConditioning();
+            try {
+                Thread.currentThread().sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            t.setTt(t.getTt() - 1);
+            System.out.println("Отняли");
+            deleteB();
         }
-    }
-
     }
 }
