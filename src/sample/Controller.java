@@ -79,9 +79,6 @@ public class Controller implements Initializable {
         termomrter.attach(battery);
         termomrter.attach(airCond);
 
-
-        event.start();
-
         temp.setText(termomrter.getTt() + "C");
     }
 

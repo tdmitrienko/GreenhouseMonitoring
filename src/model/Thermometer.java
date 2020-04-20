@@ -38,9 +38,6 @@ public class Thermometer extends Observable implements Observer {
         return kt;
     }
 
-    public void setKt(int kt) {
-        this.kt = kt;
-    }
 
     @Override
     public void update(Observable o, Object arg) {
